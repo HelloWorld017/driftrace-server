@@ -1,0 +1,30 @@
+{
+  "name": "driftrace-server",
+  "version": "1.0.0",
+  "description": "A motion controlled racing game server",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HelloWorld017/driftrace-server.git"
+  },
+  "keywords": [
+    "racing",
+    "webrtc",
+    "game"
+  ],
+  "author": "Khinenw",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HelloWorld017/driftrace-server/issues"
+  },
+  "homepage": "https://github.com/HelloWorld017/driftrace-server#readme",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  }
+}
