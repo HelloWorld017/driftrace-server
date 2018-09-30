@@ -4,7 +4,7 @@ const availChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567
 const genToken = len => [...Array(len)].map(v => availChars[Math.floor(Math.random() * availChars.length)]).join('');
 
 module.exports = function attachSocket(socket) {
-	socket.on('disconnected', reason => {
+	socket.on('disconnect', reason => {
 		if(socket.$DriftToken) delete sockets[socket.$DriftToken];
 	});
 
@@ -22,18 +22,26 @@ module.exports = function attachSocket(socket) {
 	});
 
 	socket.on('channelMessage', payload => {
+		if(!socket.$DriftToken) return;
+
 		if(!payload) return;
 		if(!payload.target || !sockets[payload.target]) return;
 
 		const messageType = payload.messageType;
 		if(typeof messageType !== 'string' || messageType.length > 32 || messageType.length < 2) return;
 
-		console.log(`Channeling ${messageType} to ${payload.target}, Payload: ${JSON.stringify(payload.payload, null, '\t')}`);
 		try {
 			sockets[payload.target].emit('channelMessage', {
 				messageType,
-				payload: payload.payload
+				payload: payload.payload,
+				from: socket.$DriftToken
 			});
 		} catch(e) {}
+	});
+
+	socket.on('existsPeer', token => {
+		if(!token || typeof token !== 'string') return;
+
+		socket.emit('existsPeer', {exists: !!sockets[token]});
 	});
 }

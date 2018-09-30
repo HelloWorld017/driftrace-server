@@ -46,6 +46,6 @@ const io = socketIo(server, {
 });
 io.on('connection', attachSocket);
 
-server.listen(80);
+server.listen(config.port);
 
 console.log(chalk.cyan(`Server Listening on ${config.port}`));
